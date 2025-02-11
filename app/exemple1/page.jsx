@@ -1,4 +1,4 @@
-import Profile from "./Profile";
+import Profile from "../../components/ui/Profile";
 import Boto from "./Boto";
 export default function Page() {
 
