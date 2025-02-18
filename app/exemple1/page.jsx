@@ -1,5 +1,5 @@
-import Profile from "../../components/ui/Profile";
-import Boto from "./Boto";
+import Profile from "../../components/ui/Profile.jsx";
+import Boto from "./Boto.jsx"
 export default function Page() {
 
     const user = {
