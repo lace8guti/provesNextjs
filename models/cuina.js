@@ -9,7 +9,7 @@ export const cuinaValidator = z.object({
       .min(1, { message: "El nom ha de tenir almenys 3 caràcters." }).trim(),
   descripcio: z.string(
     {
-      required_error : "La descripció és obligatòria"
+      required_error : "La descripció és"
     }
   ).min(10, { message: "La descripció ha de tenir almenys 10 caràcters." }).trim(),
   nivellDificultat: z
