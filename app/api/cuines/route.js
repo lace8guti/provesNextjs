@@ -19,6 +19,7 @@ export async function POST(request) {
     let data;
     try {
         data = await request.json();
+        
         const validacio = cuinaValidator.safeParse(data);
         if (!validacio.success) {
             return NextResponse.json(
@@ -26,6 +27,7 @@ export async function POST(request) {
                 { status: 400 }
             );
         }
+        
     } catch (error) {
         return NextResponse.json({ error: "Error processant la petició" }, { status: 400 });
     }
