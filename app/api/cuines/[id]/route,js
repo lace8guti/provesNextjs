@@ -1,0 +1,147 @@
+
+// API per gestionar una cuina específica
+
+// app/api/cuines/[id]/route.js
+
+
+
+import { NextResponse } from "next/server";
+
+import { Cuina } from "@/models/cuina";
+
+import { connectDB } from "@/lib/mongodb";
+
+import mongoose from "mongoose";
+
+
+
+
+export async function GET(req, { params }) {
+
+ try {
+
+ await connectDB();
+
+ const { id } = await params;
+
+ 
+
+ if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+
+ return NextResponse.json({ error: "ID no vàlid" }, { status: 400 });
+
+ }
+
+ 
+
+ const cuina = await Cuina.findById(id);
+
+ if (!cuina) {
+
+ return NextResponse.json({ error: "Cuina no trobada" }, { status: 404 });
+
+ }
+
+ 
+
+ return NextResponse.json(cuina, { status: 200 });
+
+ } catch (error) {
+
+ return NextResponse.json({ error: "Error al buscar la cuina", details: error.message }, { status: 500 });
+
+ }
+
+ }
+
+
+
+
+
+ 
+
+ // PUT: Actualitzar una cuina per ID
+
+ export async function PUT(req, { params }) {
+
+ try {
+
+ await connectDB();
+
+ const { id } = await params;
+
+ 
+
+ if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+
+ return NextResponse.json({ error: "ID no vàlid" }, { status: 400 });
+
+ }
+
+ 
+
+ const data = await req.json();
+
+ const cuinaActualitzada = await Cuina.findByIdAndUpdate(id, data, { new: true });
+
+ 
+
+ if (!cuinaActualitzada) {
+
+ return NextResponse.json({ error: "Cuina no trobada" }, { status: 404 });
+
+ }
+
+ 
+
+ return NextResponse.json(cuinaActualitzada, { status: 200 });
+
+ } catch (error) {
+
+ return NextResponse.json({ error: "Error al actualitzar la cuina", details: error.message }, { status: 500 });
+
+ }
+
+ }
+
+ 
+
+ // DELETE: Esborrar una cuina per ID
+
+ export async function DELETE(req, { params }) {
+
+ try {
+
+ await connectDB();
+
+ const { id } = await params;
+
+ 
+
+ if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+
+ return NextResponse.json({ error: "ID no vàlid" }, { status: 400 });
+
+ }
+
+ 
+
+ const cuinaEliminada = await Cuina.findByIdAndDelete(id);
+
+ if (!cuinaEliminada) {
+
+ return NextResponse.json({ error: "Cuina no trobada" }, { status: 404 });
+
+ }
+
+ 
+
+ return NextResponse.json({ message: "Cuina esborrada correctament" }, { status: 200 });
+
+ } catch (error) {
+
+ return NextResponse.json({ error: "Error al esborrar la cuina", details: error.message }, { status: 500 });
+
+ }
+
+ }
